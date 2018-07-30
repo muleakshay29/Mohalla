@@ -1,0 +1,97 @@
+<div class="my-3 p-3 bg-white rounded box-shadow">
+    <h4 class="border-bottom border-gray pb-2 mb-0">City Master</h4>
+    
+    <form class="needs-validation pt-3" novalidate method="post">
+    
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="validationCustom01">Country</label>
+          <select id="validationCustom01" class="form-control" required name="Country_id">
+            <option value="">Choose Country</option>
+            <option *ngFor="let country of fetchcountrylist" value="{{country.Country_id}}">{{country.Country_name}}</option>
+          </select>
+          <div class="invalid-feedback">Please select Country</div>
+          <div class="valid-feedback">Looks good!</div>
+        </div>
+        
+        <div class="form-group col-md-6">
+          <label for="validationCustom02">State</label>
+          <select id="validationCustom02" class="form-control" required name="State_id">
+            <option value="">Choose State</option>
+            <option value="1">Maharashtra</option>
+            <option value="2">Goa</option>
+            <option value="2">Karnataka</option>
+            <option value="2">Kerala</option>
+            <option value="2">Tamilnadu</option>
+          </select>
+          <div class="invalid-feedback">Please select State</div>
+          <div class="valid-feedback">Looks good!</div>
+        </div>
+      </div>
+              
+      <div class="form-group">
+        <label for="inputAddress">City Name</label>
+        <input type="text" class="form-control" id="validationCustom03" name="City_name" placeholder="City Name" required>
+        <div class="invalid-feedback">Please enter City name</div>
+        <div class="valid-feedback">Looks good!</div>
+      </div>
+      
+      <button class="btn btn-primary" type="submit" (click)="submitForm($event)">Submit</button>
+      
+    </form>
+  </div>
+  
+  <div class="my-3 p-3 bg-white rounded box-shadow">
+  
+    <h5 class="border-bottom border-gray pb-2 mb-0 text-center">City Master Table</h5>
+    
+    <div class="table-responsive">
+      <table class="table table-hover table-striped table-bordered">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col" class="text-center">City ID</th>
+            <th scope="col" class="text-center">City Name</th>
+          </tr>
+        </thead>
+        
+        <tbody>
+          <tr>
+            <th scope="row" class="text-center">
+              <i class="fas fa-pencil-alt"></i>&nbsp;|&nbsp;
+              <i class="fas fa-times"></i>
+            </th>
+            <td class="text-center">Mumbai</td>
+          </tr>
+          <tr>
+            <th scope="row" class="text-center">
+              <i class="fas fa-pencil-alt"></i>&nbsp;|&nbsp;
+              <i class="fas fa-times"></i>
+            </th>
+            <td class="text-center">Pune</td>
+          </tr>
+          <tr>
+            <th scope="row" class="text-center">
+              <i class="fas fa-pencil-alt"></i>&nbsp;|&nbsp;
+              <i class="fas fa-times"></i>
+            </th>
+            <td class="text-center">Benglore</td>
+          </tr>
+          <tr>
+            <th scope="row" class="text-center">
+              <i class="fas fa-pencil-alt"></i>&nbsp;|&nbsp;
+              <i class="fas fa-times"></i>
+            </th>
+            <td class="text-center">Hydrabad</td>
+          </tr>
+          <tr>
+            <th scope="row" class="text-center">
+              <i class="fas fa-pencil-alt"></i>&nbsp;|&nbsp;
+              <i class="fas fa-times"></i>
+            </th>
+            <td class="text-center">Delhi</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
+  </div>

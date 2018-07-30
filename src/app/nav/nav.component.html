@@ -1,0 +1,65 @@
+<nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
+  <a class="navbar-brand mr-auto mr-lg-0" routerLink="#">MOHALLA</a>
+  <button class="navbar-toggler p-0 border-0" type="button" data-toggle="offcanvas">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  
+  <div class="navbar-collapse offcanvas-collapse justify-content-between pl-5" id="navbarsExampleDefault">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a routerLink="/dashboard" class="nav-link" data-toggle="offcanvas">Dashboard</a>
+      </li>
+      
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Masters
+        </a>
+        <div class="dropdown-menu" aria-labelledby="dropdown01">
+          <a class="dropdown-item" routerLink='country-master' data-toggle="offcanvas">Country Master</a>
+          <a class="dropdown-item" routerLink="state-master" data-toggle="offcanvas">State Master</a>
+          <a class="dropdown-item" routerLink="city-master" data-toggle="offcanvas">City Master</a>
+          <a class="dropdown-item" routerLink="shop-category" data-toggle="offcanvas">Shop Category Master</a>
+          <a class="dropdown-item" routerLink="product-category" data-toggle="offcanvas">Product Category Master</a>
+          <a class="dropdown-item" routerLink="product-subcategory" data-toggle="offcanvas">Product-Sub Category Master</a>
+        </div>
+      </li>
+
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Enrollments</a>
+        <div class="dropdown-menu" aria-labelledby="dropdown01">
+          <a class="dropdown-item" routerLink="mohalla-register" data-toggle="offcanvas">Mohalla Registration</a>
+          <a class="dropdown-item" routerLink="society-register" data-toggle="offcanvas">Society Registration</a>
+          <a class="dropdown-item" routerLink="shop-register" data-toggle="offcanvas">Shopkeeper Registration</a>
+          <a class="dropdown-item" routerLink="customer-register" data-toggle="offcanvas">Customer Registration</a>
+        </div>
+      </li>
+
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Deals</a>
+        <div class="dropdown-menu" aria-labelledby="dropdown01">
+          <a class="dropdown-item" routerLink="create-deal" data-toggle="offcanvas">Create Deal</a>
+          <a class="dropdown-item" routerLink="validate-deal" data-toggle="offcanvas">Validate Deal</a>
+          <a class="dropdown-item" routerLink="current-deals" data-toggle="offcanvas">Current Deals</a>
+          <a class="dropdown-item" routerLink="completed-deals" data-toggle="offcanvas">Completed Deals</a>
+        </div>
+      </li>
+
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Reports</a>
+        <div class="dropdown-menu" aria-labelledby="dropdown01">
+          <a class="dropdown-item" routerLink="customer-report" data-toggle="offcanvas">Customer Report</a>
+          <a class="dropdown-item" routerLink="transation-report" data-toggle="offcanvas">Transaction Report</a>
+        </div>
+      </li>
+    </ul>
+    
+    <ul class="nav justify-content-end">
+      <li class="nav-item">
+        <a class="nav-link" routerLink="index" style="color: #fff;">
+          <i class="fas fa-sign-out-alt"></i>&nbsp; Logout
+        </a>
+      </li>
+    </ul>
+    
+  </div>		
+  </nav>
