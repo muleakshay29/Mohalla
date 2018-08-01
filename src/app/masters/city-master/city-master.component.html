@@ -1,42 +1,45 @@
+<ngb-alert *ngIf="successMessage" type="success" (close)="successMessage = null">{{ successMessage }}</ngb-alert>
+
 <div class="my-3 p-3 bg-white rounded box-shadow">
     <h4 class="border-bottom border-gray pb-2 mb-0">City Master</h4>
     
-    <form class="needs-validation pt-3" novalidate method="post">
+    <form class="needs-validation pt-3" novalidate [formGroup]="cityMaster" (ngSubmit)="onCitySubmit()">
     
       <div class="form-row">
         <div class="form-group col-md-6">
-          <label for="validationCustom01">Country</label>
-          <select id="validationCustom01" class="form-control" required name="Country_id">
+          <label for="countryId">Country</label>
+          <select class="form-control" name="countryId" id="countryId" formControlName="countryId" (change)="fetchState($event)" required>
             <option value="">Choose Country</option>
-            <option *ngFor="let country of fetchcountrylist" value="{{country.Country_id}}">{{country.Country_name}}</option>
+            <option *ngFor="let country of countryList" value="{{country.Country_id}}">{{country.Country_name}}</option>
           </select>
-          <div class="invalid-feedback">Please select Country</div>
-          <div class="valid-feedback">Looks good!</div>
+          <div *ngIf="f.countryId.errors" class="invalid-feedback">
+            <div *ngIf="f.countryId.errors.required">Please select Country</div>
+          </div>
         </div>
         
         <div class="form-group col-md-6">
-          <label for="validationCustom02">State</label>
-          <select id="validationCustom02" class="form-control" required name="State_id">
+          <label for="stateId">State</label>
+          <select class="form-control" name="stateId" id="stateId" formControlName="stateId" required>
             <option value="">Choose State</option>
-            <option value="1">Maharashtra</option>
-            <option value="2">Goa</option>
-            <option value="2">Karnataka</option>
-            <option value="2">Kerala</option>
-            <option value="2">Tamilnadu</option>
+            <option *ngFor="let state of stateList" value="{{state.State_id}}">{{state.State_name}}</option>
           </select>
-          <div class="invalid-feedback">Please select State</div>
-          <div class="valid-feedback">Looks good!</div>
+          <div *ngIf="f.stateId.errors" class="invalid-feedback">
+            <div *ngIf="f.stateId.errors.required">Please select State</div>
+          </div>
         </div>
       </div>
               
       <div class="form-group">
-        <label for="inputAddress">City Name</label>
-        <input type="text" class="form-control" id="validationCustom03" name="City_name" placeholder="City Name" required>
-        <div class="invalid-feedback">Please enter City name</div>
-        <div class="valid-feedback">Looks good!</div>
+        <label for="cityName">City Name</label>
+        <input type="text" class="form-control" name="cityName" minlength="3" placeholder="City Name" formControlName="cityName" required>
+        <div *ngIf="f.cityName.errors" class="invalid-feedback">
+            <div *ngIf="f.cityName.errors.required">Please enter City name</div>
+            <div *ngIf="f.cityName.errors.minLength">City name must be at least 3 characters long</div>
+        </div>
       </div>
       
-      <button class="btn btn-primary" type="submit" (click)="submitForm($event)">Submit</button>
+      <button class="btn btn-primary" type="submit">Submit</button>
+      <!-- [disabled]="!cityMaster.valid" -->
       
     </form>
   </div>
@@ -44,6 +47,11 @@
   <div class="my-3 p-3 bg-white rounded box-shadow">
   
     <h5 class="border-bottom border-gray pb-2 mb-0 text-center">City Master Table</h5>
+
+    <ngx-datatable
+        [rows]="cityList"
+        [columns]="columns">
+      </ngx-datatable>
     
     <div class="table-responsive">
       <table class="table table-hover table-striped table-bordered">
@@ -55,41 +63,12 @@
         </thead>
         
         <tbody>
-          <tr>
-            <th scope="row" class="text-center">
-              <i class="fas fa-pencil-alt"></i>&nbsp;|&nbsp;
-              <i class="fas fa-times"></i>
-            </th>
-            <td class="text-center">Mumbai</td>
+
+          <tr *ngFor="let city of cityList">
+              <td class="text-center">{{ city.City_id }}</td>
+            <td class="text-center">{{ city.City_name }}</td>
           </tr>
-          <tr>
-            <th scope="row" class="text-center">
-              <i class="fas fa-pencil-alt"></i>&nbsp;|&nbsp;
-              <i class="fas fa-times"></i>
-            </th>
-            <td class="text-center">Pune</td>
-          </tr>
-          <tr>
-            <th scope="row" class="text-center">
-              <i class="fas fa-pencil-alt"></i>&nbsp;|&nbsp;
-              <i class="fas fa-times"></i>
-            </th>
-            <td class="text-center">Benglore</td>
-          </tr>
-          <tr>
-            <th scope="row" class="text-center">
-              <i class="fas fa-pencil-alt"></i>&nbsp;|&nbsp;
-              <i class="fas fa-times"></i>
-            </th>
-            <td class="text-center">Hydrabad</td>
-          </tr>
-          <tr>
-            <th scope="row" class="text-center">
-              <i class="fas fa-pencil-alt"></i>&nbsp;|&nbsp;
-              <i class="fas fa-times"></i>
-            </th>
-            <td class="text-center">Delhi</td>
-          </tr>
+         
         </tbody>
       </table>
     </div>

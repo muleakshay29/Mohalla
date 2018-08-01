@@ -1,6 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule }    from '@angular/common/http';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
@@ -24,7 +26,9 @@ import { SocietyRegisterComponent } from './enrollments/society-register/society
 import { ShopRegisterComponent } from './enrollments/shop-register/shop-register.component';
 import { CustomerRegisterComponent } from './enrollments/customer-register/customer-register.component';
 
-import { FetchCountryService } from './Service/fetch-country.service';
+import { MasterService } from './Service/master.service';
+import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -52,9 +56,13 @@ import { FetchCountryService } from './Service/fetch-country.service';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NgbModule.forRoot(),
+    NgxDatatableModule
   ],
-  providers: [FetchCountryService],
+  providers: [MasterService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
