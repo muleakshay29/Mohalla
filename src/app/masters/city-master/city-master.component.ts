@@ -19,12 +19,6 @@ export class CityMasterComponent implements OnInit {
     { prop: 'City_name' }
   ];
 
-  rows = [
-    { name: 'Austin', gender: 'Male', company: 'Swimlane' },
-    { name: 'Dany', gender: 'Male', company: 'KFC' },
-    { name: 'Molly', gender: 'Female', company: 'Burger King' },
-  ];
-
   private _success = new Subject<string>();
   staticAlertClosed = false;
   successMessage: string;
@@ -86,7 +80,6 @@ export class CityMasterComponent implements OnInit {
   onCitySubmit()
   {
     console.log(this.cityList);
-    console.log(this.rows);
       if (this.cityMaster.valid) 
       {
         const cityData = this.cityMaster.value;
