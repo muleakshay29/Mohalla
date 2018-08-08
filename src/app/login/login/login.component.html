@@ -1,0 +1,38 @@
+<form class="form-signin needs-validation text-center" novalidate [formGroup]="loginForm" (ngSubmit)="loginSubmit()">
+  <ngb-alert *ngIf="successMessage" type="success" (close)="successMessage = null">{{ successMessage }}</ngb-alert>
+  
+  <div class="card">
+    <div class="card-body text-center">
+      MOHALLA
+    </div>
+  </div>
+  
+  <h1 class="h3 mb-3 font-weight-normal" style="color: #000000 !important;">Please sign in</h1>		
+  
+    <label for="inputEmail" class="sr-only">Email address</label>
+    <input type="email" name="username" formControlName="username" id="username" class="form-control" placeholder="Email address" required autofocus>
+
+    <label for="inputPassword" class="sr-only">Password</label>
+    <input type="password" name="password" formControlName="password" id="password" minlength="2" class="form-control" placeholder="Password" required />
+
+  <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+  
+  <div class="card mt-3" style="width: 18rem;">
+    <div class="card-body">
+      <div class="row">
+        <div class="col border-bottom p-2">
+          <h5 class="card-title">Customer login</h5>
+          <p class="card-text mb-2 text-muted">Username : customer@mohalla.com</p>
+        </div>
+        
+        <div class="col p-2">
+          <h5 class="card-title">Seller login</h5>
+          <p class="card-text mb-2 text-muted">Username : seller@mohalla.com</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <p class="mt-5 mb-3 text-muted" style="color: #fff !important;">&copy; 2017-2018</p>
+
+</form>

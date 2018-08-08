@@ -2,7 +2,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule }    from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
@@ -27,8 +26,13 @@ import { ShopRegisterComponent } from './enrollments/shop-register/shop-register
 import { CustomerRegisterComponent } from './enrollments/customer-register/customer-register.component';
 
 import { MasterService } from './Service/master.service';
+import { PaginationServiceService } from './Service/pagination-service.service';
+import { AuthenticationService } from './Service/authentication.service';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
+import { CityDetailsComponent } from './masters/city-master/city-details/city-details.component';
+import { LoginComponent } from './login/login/login.component';
+import { FilterPipe } from './pipes/filter.pipe';
 
 @NgModule({
   declarations: [
@@ -51,7 +55,10 @@ import { ReactiveFormsModule } from '@angular/forms';
     MohallaRegisterComponent,
     SocietyRegisterComponent,
     ShopRegisterComponent,
-    CustomerRegisterComponent
+    CustomerRegisterComponent,
+    CityDetailsComponent,
+    LoginComponent,
+    FilterPipe
   ],
   imports: [
     BrowserModule,
@@ -60,9 +67,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     FormsModule,
     ReactiveFormsModule,
     NgbModule.forRoot(),
-    NgxDatatableModule
+    ReactiveFormsModule.withConfig({warnOnNgModelWithFormControl: 'never'})
   ],
-  providers: [MasterService],
+  providers: [MasterService, PaginationServiceService, AuthenticationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

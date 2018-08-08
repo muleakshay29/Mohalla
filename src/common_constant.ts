@@ -17,4 +17,23 @@ export class AddCity {
 export class FetchCity {
     City_id: number;
     City_name: string;
+    countryId: number;
+    stateId: number;
+  }
+
+export class updateCity {
+    cityId: number;
+    cityName: string;
+    countryId: number;
+    stateId: number;
+  }
+
+export class login {
+    username: string;
+    password: string;
+  }
+
+export class citySearch {
+    cityId: number;
+    cityName: string;
   }

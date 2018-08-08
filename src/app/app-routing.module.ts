@@ -18,9 +18,13 @@ import { MohallaRegisterComponent } from './enrollments/mohalla-register/mohalla
 import { SocietyRegisterComponent } from './enrollments/society-register/society-register.component';
 import { ShopRegisterComponent } from './enrollments/shop-register/shop-register.component';
 import { CustomerRegisterComponent } from './enrollments/customer-register/customer-register.component';
+import { CityDetailsComponent } from './masters/city-master/city-details/city-details.component';
+import { LoginComponent } from './login/login/login.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+  { path: 'login', component: LoginComponent },
+  { path: '', component: LoginComponent },
+  //{ path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'country-master', component: CountryMasterComponent },
   { path: 'state-master', component: StateMasterComponent },
@@ -38,6 +42,7 @@ const routes: Routes = [
   { path: 'completed-deals', component: CompletedDealsComponent },
   { path: 'customer-report', component: CustomerReportComponent },
   { path: 'transaction-report', component: TransactionReportComponent },
+  { path: 'cityDetails/:id', component: CityDetailsComponent },
 ];
 
 @NgModule({

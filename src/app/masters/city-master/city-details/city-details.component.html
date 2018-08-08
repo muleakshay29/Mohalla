@@ -1,0 +1,46 @@
+<ngb-alert *ngIf="successMessage" type="success" (close)="successMessage = null">{{ successMessage }}</ngb-alert>
+ 
+ <div class="my-3 p-3 bg-white rounded box-shadow" >
+    <h4 class="border-bottom border-gray pb-2 mb-0">City Master Edit</h4>
+    
+    <form class="needs-validation pt-3" novalidate [formGroup]="cityMasterEdit" (ngSubmit)="onCityEditSubmit()">
+    
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="countryId">Country</label>
+          <select class="form-control" name="countryId" [(ngModel)]="cityDetail.Country_id" (change)="fetchState($event)" formControlName="countryId" required>
+            <option value="">Choose Country</option>
+            <option *ngFor="let country of countryList" [value]="country.Country_id" >{{country.Country_name}}</option>
+          </select>
+          <div *ngIf="f.countryId.errors" class="invalid-feedback">
+            <div *ngIf="f.countryId.errors.required">Please select Country</div>
+          </div>
+        </div>
+        
+        <div class="form-group col-md-6">
+          <label for="stateId">State</label>
+          <select class="form-control" name="stateId" id="stateId" [(ngModel)]="cityDetail.State_id" formControlName="stateId" required>
+            <option value="">Choose State</option>
+            <option *ngFor="let state of stateList" value="{{state.State_id}}">{{state.State_name}}</option>
+          </select>
+          <div *ngIf="f.stateId.errors" class="invalid-feedback">
+            <div *ngIf="f.stateId.errors.required">Please select State</div>
+          </div>
+        </div>
+      </div>
+              
+      <div class="form-group">
+        <label for="cityName">City Name</label>
+        <input type="text" class="form-control" name="cityName" id="cityName" minlength="3" [(ngModel)]="cityDetail.City_name" minlength="3" value="{{cityDetail.City_name}}" formControlName="cityName" required>
+        <input type="hidden" name="cityId" id="cityId" [(ngModel)]="cityDetail.City_id" value="{{cityDetail.City_id}}" formControlName="cityId">
+        <div *ngIf="f.cityName.errors" class="invalid-feedback">
+            <div *ngIf="f.cityName.errors.required">Please enter City name</div>
+            <div *ngIf="f.cityName.errors.minLength">City name must be at least 3 characters long</div>
+        </div>
+      </div>
+      
+      <button class="btn btn-primary mr-2" type="submit" [disabled]="!cityMasterEdit.valid">Submit</button>
+      <button class="btn btn-secondary" (click)="goBack()" type="button">Cancel</button>
+      
+    </form>
+  </div>

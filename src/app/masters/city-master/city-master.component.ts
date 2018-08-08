@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { MasterService } from '../../Service/master.service';
-import { FetchCountry, FetchState, FetchCity } from '../../../common_constant';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FetchCountry, FetchState, FetchCity, AddCity } from '../../../common_constant';
+import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { NgbAlertConfig } from '@ng-bootstrap/ng-bootstrap';
+import { PaginationServiceService } from '../../Service/pagination-service.service';
 
 @Component({
   selector: 'app-city-master',
@@ -14,11 +15,6 @@ import { NgbAlertConfig } from '@ng-bootstrap/ng-bootstrap';
 })
 export class CityMasterComponent implements OnInit {
 
-  columns = [
-    { prop: 'City_id' },
-    { prop: 'City_name' }
-  ];
-
   private _success = new Subject<string>();
   staticAlertClosed = false;
   successMessage: string;
@@ -26,25 +22,43 @@ export class CityMasterComponent implements OnInit {
   countryList: FetchCountry[];
   stateList: FetchState[];
   cityList: FetchCity[];
+  selectedCity: AddCity;
+
+  pager: any = {};
+  pagedItems: any[];
+  pageLength : number;
+
+  cityNamePattern = "[A-Z]";
 
   constructor(
     private MasterService: MasterService,
-    private alertConfig: NgbAlertConfig) { }
+    private alertConfig: NgbAlertConfig,
+    private pagerService: PaginationServiceService,
+    private fb: FormBuilder) 
+  { 
+    this.cityMaster = fb.group({
+        countryId : new FormControl('', Validators.required),
+        stateId : new FormControl('', Validators.required),
+        cityName : new FormControl('', [
+                                        Validators.required,
+                                        /*Validators.pattern(this.cityNamePattern),*/
+                                        Validators.minLength(3)
+                                      ] )
+    });
+  }
 
   cityMaster: FormGroup;
   submitted = false;
+  filterCity: string;
 
   ngOnInit(): void 
   {
-      this.cityMaster = new FormGroup(
+    /*this.cityMaster = new FormGroup(
       {
           countryId : new FormControl('', Validators.required),
           stateId : new FormControl('', Validators.required),
-          cityName : new FormControl('', [
-                            Validators.required, 
-                            Validators.minLength(3)
-                      ])
-      });
+          cityName : new FormControl('', Validators.minLength(3) )
+      });*/
 
       this.fetchCountry();
       this.fetchCity();
@@ -72,30 +86,34 @@ export class CityMasterComponent implements OnInit {
       .subscribe(stateList => this.stateList = stateList);
   }
 
-  fetchCity(): void {
+  fetchCity(): void 
+  {
     this.MasterService.fetchCity()
-    .subscribe(cityList => this.cityList = cityList);
+        .subscribe(cityList => {
+          this.cityList = cityList;
+          this.pageLength = this.cityList.length;
+          this.setPage(1);
+        });
   }
 
   onCitySubmit()
   {
-    console.log(this.cityList);
-      if (this.cityMaster.valid) 
-      {
-        const cityData = this.cityMaster.value;
-        this.MasterService.addCity(cityData)
-                          .subscribe((addCity) => this.addCity(addCity));
-        //this.cityMaster.reset();
-      }
+    if (this.cityMaster.valid) 
+    {
+      const cityData = this.cityMaster.value;
+      this.MasterService.addCity(cityData)
+                        .subscribe((addCity) => this.addCity(addCity));
+    }
   }
 
   addCity(data)
   {
-    console.log(data);
     if(data > 0)
     {
         this.alertConfig.type = 'success';
         this._success.next(`City is inserted successfully.`);
+        this.fetchCity();
+        this.cityMaster.reset();
     }
     else
     {
@@ -103,5 +121,46 @@ export class CityMasterComponent implements OnInit {
       this._success.next(`Error inserting City.`);
     }
   }
+
+  cityDelete(cityID): void
+  {
+    console.log(cityID);
+    this.MasterService.deleteCity(cityID).subscribe((deleteCity) => this.deleteCity(deleteCity));
+  }
+
+  deleteCity(data)
+  {
+    if(data > 0)
+    {
+        this.alertConfig.type = 'success';
+        this._success.next(`City deleted successfully.`);
+        this.fetchCity();
+    }
+    else
+    {
+      this.alertConfig.type = 'danger';
+      this._success.next(`Error deleting City.`);
+    }
+  }
+
+  updateFilter(e)
+  {
+    this.filterCity = e.target.value;
+    this.MasterService.searchCity(this.filterCity)
+        .subscribe(cityList => {
+          this.cityList = cityList;
+          this.pageLength = this.cityList.length;
+          this.setPage(1);
+        });
+  }
+
+  setPage(page: number) 
+  {
+    // get pager object from service
+    this.pager = this.pagerService.getPager(this.cityList.length, page);
+
+    // get current page of items
+    this.pagedItems = this.cityList.slice(this.pager.startIndex, this.pager.endIndex + 1);
+}
 
 }

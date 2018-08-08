@@ -1,76 +1,153 @@
+<app-nav></app-nav>
+
 <ngb-alert *ngIf="successMessage" type="success" (close)="successMessage = null">{{ successMessage }}</ngb-alert>
 
-<div class="my-3 p-3 bg-white rounded box-shadow">
-    <h4 class="border-bottom border-gray pb-2 mb-0">City Master</h4>
-    
-    <form class="needs-validation pt-3" novalidate [formGroup]="cityMaster" (ngSubmit)="onCitySubmit()">
-    
-      <div class="form-row">
-        <div class="form-group col-md-6">
-          <label for="countryId">Country</label>
-          <select class="form-control" name="countryId" id="countryId" formControlName="countryId" (change)="fetchState($event)" required>
-            <option value="">Choose Country</option>
-            <option *ngFor="let country of countryList" value="{{country.Country_id}}">{{country.Country_name}}</option>
-          </select>
-          <div *ngIf="f.countryId.errors" class="invalid-feedback">
-            <div *ngIf="f.countryId.errors.required">Please select Country</div>
-          </div>
-        </div>
+<div class="my-3 p-3 bg-white rounded box-shadow" [hidden]="submitted">
+  <h4 class="border-bottom border-gray pb-2 mb-0">City Master</h4>
+  
+  <form class="needs-validation pt-3" novalidate [formGroup]="cityMaster" (ngSubmit)="onCitySubmit()">
+  
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="countryId">Country</label>
+        <select 
+          class="form-control" 
+          id="countryId" 
+          formControlName="countryId" 
+          (change)="fetchState($event)" 
+          required
+          [ngClass]="f.countryId.invalid && (f.countryId.dirty || f.countryId.touched) ? 'form-control is-invalid' : 'form-control' "
+        >
+          <option value="">Choose Country</option>
+          <option *ngFor="let country of countryList" value="{{country.Country_id}}">{{country.Country_name}}</option>
+        </select>
         
-        <div class="form-group col-md-6">
-          <label for="stateId">State</label>
-          <select class="form-control" name="stateId" id="stateId" formControlName="stateId" required>
-            <option value="">Choose State</option>
-            <option *ngFor="let state of stateList" value="{{state.State_id}}">{{state.State_name}}</option>
-          </select>
-          <div *ngIf="f.stateId.errors" class="invalid-feedback">
-            <div *ngIf="f.stateId.errors.required">Please select State</div>
-          </div>
-        </div>
-      </div>
-              
-      <div class="form-group">
-        <label for="cityName">City Name</label>
-        <input type="text" class="form-control" name="cityName" minlength="3" placeholder="City Name" formControlName="cityName" required>
-        <div *ngIf="f.cityName.errors" class="invalid-feedback">
-            <div *ngIf="f.cityName.errors.required">Please enter City name</div>
-            <div *ngIf="f.cityName.errors.minLength">City name must be at least 3 characters long</div>
+        <div *ngIf="f.countryId.invalid && (f.countryId.dirty || f.countryId.touched)" class="text-danger font-italic">
+          <div *ngIf="f.countryId.errors.required">*Please select Country</div>
         </div>
       </div>
       
-      <button class="btn btn-primary" type="submit">Submit</button>
-      <!-- [disabled]="!cityMaster.valid" -->
-      
-    </form>
-  </div>
-  
-  <div class="my-3 p-3 bg-white rounded box-shadow">
-  
-    <h5 class="border-bottom border-gray pb-2 mb-0 text-center">City Master Table</h5>
-
-    <ngx-datatable
-        [rows]="cityList"
-        [columns]="columns">
-      </ngx-datatable>
-    
-    <div class="table-responsive">
-      <table class="table table-hover table-striped table-bordered">
-        <thead class="thead-dark">
-          <tr>
-            <th scope="col" class="text-center">City ID</th>
-            <th scope="col" class="text-center">City Name</th>
-          </tr>
-        </thead>
+      <div class="form-group col-md-6">
+        <label for="stateId">State</label>
+        <select 
+          id="stateId" 
+          formControlName="stateId" 
+          required
+          [ngClass]="f.stateId.invalid && (f.stateId.dirty || f.stateId.touched) ? 'form-control is-invalid' : 'form-control' "
+        >
+          <option value="">Choose State</option>
+          <option *ngFor="let state of stateList" value="{{state.State_id}}">{{state.State_name}}</option>
+        </select>
         
-        <tbody>
-
-          <tr *ngFor="let city of cityList">
-              <td class="text-center">{{ city.City_id }}</td>
-            <td class="text-center">{{ city.City_name }}</td>
-          </tr>
-         
-        </tbody>
-      </table>
+        <div *ngIf="f.stateId.invalid && (f.stateId.dirty || f.stateId.touched)" class="text-danger font-italic">
+          <div *ngIf="f.stateId.errors.required">*Please select State</div>
+        </div>
+      </div>
     </div>
-  
+            
+    <div class="form-group">
+      <label for="cityName">City Name</label>
+      <input 
+        type="text" 
+        name="cityName" 
+        minlength="3" 
+        placeholder="City Name" 
+        formControlName="cityName" 
+        [ngClass]="f.cityName.invalid && (f.cityName.dirty || f.cityName.touched) ? 'form-control is-invalid' : 'form-control' "
+        required
+      >
+      
+      <div *ngIf="f.cityName.invalid && (f.cityName.dirty || f.cityName.touched)" class="text-danger font-italic">
+        <div *ngIf="f.cityName.errors.required">*Please enter City Name.</div>
+        <!-- <div *ngIf="!f.cityName.errors.pattern">*Please enter valid City Name</div> -->
+        <div *ngIf="!f.cityName.errors.minLength">*City name must be at least 3 characters long</div>
+      </div>
+    </div>
+    
+    <button class="btn btn-primary" type="submit" [disabled]="!cityMaster.valid">Submit</button>
+    <!-- [disabled]="!cityMaster.valid" -->
+    
+  </form>
+</div>
+
+<div class="p-3 bg-white rounded box-shadow dataTable">
+
+  <h5 class="border-bottom border-gray pb-2 mb-0 text-center">City Master Table</h5>
+
+  <div class="table-responsive">
+
+    <table class="table">
+        <tr>
+          <td>
+              <input 
+                type="text" 
+                class="form-control text-center" 
+                placeholder="Search City"
+                [(ngModel)]="searchText"
+                (input)='updateFilter($event)'
+              >
+          </td>
+        </tr>
+    </table>
+    
+    <table class="table table-hover table-striped table-bordered">
+      <thead class="thead-dark">
+        <tr>
+            <th scope="col" class="text-center">Action</th>
+          <th scope="col" class="text-center">City ID</th>
+          <th scope="col" class="text-center">City Name</th>
+        </tr>
+      </thead>
+      
+      <tbody>
+
+        <tr *ngFor="let city of pagedItems"> <!--  | filter : searchText -->
+          <th scope="row" class="text-center">
+            <a routerLink="/cityDetails/{{ city.City_id }}">
+              <i class="fas fa-pencil-alt"></i>
+            </a>  
+            &nbsp;|&nbsp;
+            <a (click)="cityDelete(city.City_id)" href="javascript:void(0);">
+              <i class="fas fa-times"></i>
+            </a>
+          </th>
+          <td class="text-center">{{ city.City_id }}</td>
+          <td class="text-center">{{ city.City_name }}</td>
+        </tr>
+        
+      </tbody>
+    </table>
+
   </div>
+
+  <nav aria-label="Page navigation example" *ngIf="pager.pages && pager.pages.length">
+    <ul class="pagination pagination-sm">
+      <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+        <a class="page-link" aria-label="First" (click)="setPage(1)">
+            <i class="fas fa-angle-double-left"></i>
+        </a>
+      </li>
+      <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+          <a class="page-link" aria-label="Previous" (click)="setPage(pager.currentPage - 1)">
+              <i class="fas fa-chevron-left"></i>
+          </a>
+        </li>
+      <li class="page-item" *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+        <a class="page-link" (click)="setPage(page)">{{page}}</a>
+      </li>
+      <li class="page-item" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+        <a class="page-link" aria-label="Next" (click)="setPage(pager.currentPage + 1)">
+            <i class="fas fa-chevron-right"></i>
+        </a>
+      </li>
+      <li class="page-item" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+          <a class="page-link" aria-label="Last" (click)="setPage(pager.totalPages)">
+              <i class="fas fa-angle-double-right"></i>
+          </a>
+        </li>
+    </ul>
+  </nav>
+
+</div>
+
+<app-footer></app-footer>
